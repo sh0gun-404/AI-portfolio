@@ -7,6 +7,47 @@ import resumeData from '../data/resume.json';
 
 export default function Home() {
   const [copyStatus, setCopyStatus] = useState('Copy Email');
+  const [formStatus, setFormStatus] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setFormStatus('Sending your message...');
+
+    const name = e.target.name.value;
+    const email = e.target.email.value;
+    const message = e.target.message.value;
+
+    try {
+      const response = await fetch('https://formsubmit.co/ajax/shubhshaguneet635@gmail.com', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          name,
+          email,
+          message,
+          _subject: `New Portfolio Inquiry from ${name}`
+        })
+      });
+
+      const result = await response.json();
+      if (response.ok && result.success === 'true') {
+        setFormStatus('Thank you! Your message has been sent successfully.');
+        e.target.reset();
+      } else {
+        setFormStatus('Something went wrong. Please try emailing Shubh directly.');
+      }
+    } catch (err) {
+      console.error('Form error:', err);
+      setFormStatus('Failed to connect. Please email Shubh directly at shubhshaguneet635@gmail.com.');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   useEffect(() => {
     // Reveal-on-scroll animations
@@ -318,21 +359,30 @@ export default function Home() {
             <form
               id="contact-form"
               className="glass contact-form reveal"
-              onSubmit={(e) => {
-                e.preventDefault();
-                alert('Thank you! This form is set up to simulate submissions. You can also email Shubh directly.');
-              }}
+              onSubmit={handleFormSubmit}
             >
               <label htmlFor="name">Full Name</label>
-              <input id="name" name="name" type="text" required placeholder="Your name" />
+              <input id="name" name="name" type="text" required placeholder="Your name" disabled={isSubmitting} />
 
               <label htmlFor="email">Email Address</label>
-              <input id="email" name="email" type="email" required placeholder="you@example.com" />
+              <input id="email" name="email" type="email" required placeholder="you@example.com" disabled={isSubmitting} />
 
               <label htmlFor="message">Message</label>
-              <textarea id="message" name="message" rows="5" required placeholder="Describe your requirement..."></textarea>
+              <textarea id="message" name="message" rows="5" required placeholder="Describe your requirement..." disabled={isSubmitting}></textarea>
 
-              <button type="submit" className="btn primary">Send Message</button>
+              <button type="submit" className="btn primary" disabled={isSubmitting}>
+                {isSubmitting ? 'Sending...' : 'Send Message'}
+              </button>
+
+              {formStatus && (
+                <p className="form-status-msg" style={{ 
+                  marginTop: '12px', 
+                  fontSize: '0.9rem', 
+                  color: formStatus.includes('Thank you') ? 'var(--accent-2)' : '#f87171' 
+                }}>
+                  {formStatus}
+                </p>
+              )}
             </form>
           </div>
         </section>
