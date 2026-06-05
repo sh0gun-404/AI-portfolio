@@ -65,7 +65,7 @@ ${context}
       });
       
       const response = await client.chat.completions.create({
-        model: 'grok-beta',
+        model: 'grok-2',
         messages: [
           { role: 'system', content: systemPrompt },
           { role: 'user', content: question }
