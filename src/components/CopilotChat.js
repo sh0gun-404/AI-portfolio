@@ -19,6 +19,7 @@ export default function CopilotChat() {
   // Settings state (hydrated from localStorage on mount)
   const [provider, setProvider] = useState('grok');
   const [apiKey, setApiKey] = useState('');
+  const [serverMissingKey, setServerMissingKey] = useState(false);
 
   const chatEndRef = useRef(null);
 
@@ -36,6 +37,7 @@ export default function CopilotChat() {
     setApiKey(newKey);
     localStorage.setItem('copilot_provider', newProvider);
     localStorage.setItem('copilot_api_key', newKey);
+    setServerMissingKey(false);
     setShowSettings(false);
   };
 
@@ -110,14 +112,13 @@ export default function CopilotChat() {
     setInput('');
     setIsLoading(true);
 
-    // If API key is available (either locally or in the env via server), try calling the RAG API
-    // If not, use the local search fallback
-    const hasKey = apiKey.trim().length > 0;
+    // If client key is missing AND we've verified the server lacks a key, use local fallback search
+    const hasClientKey = apiKey.trim().length > 0;
+    const skipServer = !hasClientKey && serverMissingKey;
 
-    // We make an API call to verify if the server can serve it. 
-    // If the server returns an error about missing key, we capture it and fallback or notify the user.
     try {
-      if (hasKey) {
+      if (!skipServer) {
+        // Try calling the server API
         const response = await fetch('/api/chat', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -133,7 +134,11 @@ export default function CopilotChat() {
         if (response.ok && data.answer) {
           setMessages(prev => [...prev, { role: 'assistant', content: data.answer }]);
         } else {
-          // If server api call fails due to key configuration, fallback gracefully and show warning
+          // If server reports that API key is missing, remember this to avoid future calls
+          if (data.error && data.error.toLowerCase().includes('api key is missing')) {
+            setServerMissingKey(true);
+          }
+          
           const fallbackAnswer = performLocalSearch(messageText);
           setMessages(prev => [
             ...prev,
@@ -144,7 +149,7 @@ export default function CopilotChat() {
           ]);
         }
       } else {
-        // No key provided - execute pure local fallback search immediately (simulating fast AI response)
+        // We already know no API key is available anywhere. Perform fast local search.
         setTimeout(() => {
           const fallbackAnswer = performLocalSearch(messageText);
           setMessages(prev => [
