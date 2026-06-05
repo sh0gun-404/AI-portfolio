@@ -35,7 +35,7 @@ export default function Home() {
       });
 
       const result = await response.json();
-      if (response.ok && result.success === 'true') {
+      if (response.ok && (result.success === true || result.success === 'true' || result.success)) {
         setFormStatus('Thank you! Your message has been sent successfully.');
         e.target.reset();
       } else {
