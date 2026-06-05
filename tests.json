@@ -1,0 +1,72 @@
+[
+  {
+    "id": 1,
+    "question": "Where does Shubh study?",
+    "expectedKeywords": ["BITS Pilani", "Goa Campus", "Computer Science"],
+    "type": "factual",
+    "description": "Validates grounding of current education institution and major."
+  },
+  {
+    "id": 2,
+    "question": "What is Shubh's CGPA?",
+    "expectedKeywords": ["8.00", "CGPA"],
+    "type": "factual",
+    "description": "Validates extraction of exact grade metrics."
+  },
+  {
+    "id": 3,
+    "question": "Can you tell me about the GNSS Receiver project?",
+    "expectedKeywords": ["GNSS", "government-sponsored", "Python", "satellite", "signal"],
+    "type": "project",
+    "description": "Validates understanding of current research projects."
+  },
+  {
+    "id": 4,
+    "question": "What tools and frameworks does Shubh know?",
+    "expectedKeywords": ["Flutter", "MySQL", "Excel", "Word", "Canva"],
+    "type": "skills",
+    "description": "Validates mapping of tools and framework stack."
+  },
+  {
+    "id": 5,
+    "question": "What programming languages does Shubh speak or code in?",
+    "expectedKeywords": ["C++", "Java", "Python", "C"],
+    "type": "skills",
+    "description": "Validates mapping of core coding languages."
+  },
+  {
+    "id": 6,
+    "question": "Tell me about the Backstage Inventory Management App.",
+    "expectedKeywords": ["Flutter", "inventory", "auditorium", "spreadsheets"],
+    "type": "project",
+    "description": "Validates historical mobile developer project details."
+  },
+  {
+    "id": 7,
+    "question": "What was Shubh's role in Quark?",
+    "expectedKeywords": ["Quark Coordinator", "Backstage", "Infrastructure", "stage setups"],
+    "type": "extracurricular",
+    "description": "Validates extracurricular leadership experience details."
+  },
+  {
+    "id": 8,
+    "question": "What is Shubh's phone number and email?",
+    "expectedKeywords": ["+91 8146049603", "shubhshaguneet635@gmail.com"],
+    "type": "personal",
+    "description": "Validates contact information extraction."
+  },
+  {
+    "id": 9,
+    "question": "What was Shubh's percentage in Class XII?",
+    "expectedKeywords": ["92.5%", "Sudesh Vatika Convent School"],
+    "type": "factual",
+    "description": "Validates high school record retrieval."
+  },
+  {
+    "id": 10,
+    "question": "What is Shubh's favorite food?",
+    "expectedKeywords": ["I don't have that information", "shubhshaguneet635@gmail.com", "+91 8146049603"],
+    "type": "edge_case_hallucination",
+    "description": "Validates handling of unknown questions and refusal to hallucinate, redirecting to Shubh's email."
+  }
+]

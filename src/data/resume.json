@@ -1,0 +1,71 @@
+{
+  "personal": {
+    "name": "Shubh Shaguneet Singh",
+    "email": "shubhshaguneet635@gmail.com",
+    "phone": "+91 8146049603",
+    "location": "Goa, India",
+    "bio": "B.E. Computer Science student at BITS Pilani Goa Campus. Experienced in full-stack development, mobile application design, and research-focused software engineering for GNSS signal processing. Problem solver with strong fundamentals in DSA, DBMS, and Object-Oriented Programming."
+  },
+  "education": [
+    {
+      "institution": "BITS Pilani, K.K. Birla Goa Campus",
+      "degree": "B.E. in Computer Science",
+      "period": "Aug 2024 - Present",
+      "score": "CGPA: 8.00",
+      "coursework": [
+        "Data Structures & Algorithms",
+        "OOP",
+        "Database Systems",
+        "Logic in CS",
+        "Digital Design",
+        "Microprocessors & Interfacing"
+      ]
+    },
+    {
+      "institution": "Sudesh Vatika Convent School",
+      "degree": "Class XII (High School)",
+      "period": "Completed 2024",
+      "score": "Percentage: 92.5%"
+    },
+    {
+      "institution": "Silver Oaks School",
+      "degree": "Class X (Matriculation)",
+      "period": "Completed 2022",
+      "score": "Percentage: 95%"
+    }
+  ],
+  "projects": [
+    {
+      "title": "GNSS Receiver Software Development",
+      "role": "Research Contributor",
+      "period": "Apr 2026 - Present",
+      "description": "Contributing to a government-sponsored research project developing Python-based software to process and analyze GNSS signals. Implementing algorithms to enhance satellite signal acquisition and positioning accuracy."
+    },
+    {
+      "title": "Full-Stack Library Management System",
+      "role": "Full-Stack Developer",
+      "period": "Jan 2026 - May 2026",
+      "description": "Developed a full-stack web application to manage the campus library with a MySQL backend. Supported book cataloguing, user management, and borrow/return workflows."
+    },
+    {
+      "title": "Backstage Inventory Management App",
+      "role": "Mobile Developer",
+      "period": "May 2025 - Jul 2025",
+      "description": "Built a cross-platform mobile application from scratch using Flutter to digitize the college auditorium's inventory tracking system, replacing error-prone spreadsheets."
+    }
+  ],
+  "skills": {
+    "programmingLanguages": ["C++", "Java", "Python", "C"],
+    "frameworksAndTools": ["Flutter", "MySQL", "Microsoft Excel", "Microsoft Word", "Canva"],
+    "coreCompetencies": ["Object-Oriented Programming", "Database Management", "Data Structures & Algorithms"],
+    "languages": ["English", "Punjabi", "Hindi"]
+  },
+  "extracurriculars": [
+    {
+      "role": "Quark Coordinator",
+      "organization": "Dept. of Backstage & Infrastructure Management",
+      "period": "Apr 2026 - Present",
+      "description": "Managed deployment of large-scale stage setups and streamlined backstage operations for Quark, the annual technical festival of BITS Pilani Goa."
+    }
+  ]
+}
