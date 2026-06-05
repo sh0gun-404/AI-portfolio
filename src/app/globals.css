@@ -5,8 +5,8 @@
   --text: #e2e8f0;
   --muted: #94a3b8;
   --line: rgba(148, 163, 184, 0.15);
-  --accent: #38bdf8;
-  --accent-2: #34d399;
+  --accent: #d946ef;
+  --accent-2: #f472b6;
   --shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
   --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -23,8 +23,8 @@ html {
 
 body {
   font-family: var(--font-geist-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  background: radial-gradient(circle at 10% 15%, #0f2042 0%, transparent 45%),
-              radial-gradient(circle at 90% 20%, #082d33 0%, transparent 40%),
+  background: radial-gradient(circle at 10% 15%, #250930 0%, transparent 45%),
+              radial-gradient(circle at 90% 20%, #300821 0%, transparent 40%),
               linear-gradient(180deg, #04060d 0%, #070b13 60%, #020306 100%);
   color: var(--text);
   line-height: 1.6;
@@ -45,13 +45,13 @@ body {
 }
 
 .bg-blur-a {
-  background: #0284c7;
+  background: #d946ef;
   top: -150px;
   left: -150px;
 }
 
 .bg-blur-b {
-  background: #059669;
+  background: #86198f;
   right: -150px;
   bottom: -150px;
 }
@@ -190,14 +190,14 @@ h1 span {
 }
 
 .btn.primary {
-  background: linear-gradient(90deg, #0284c7, #0ea5e9);
+  background: linear-gradient(90deg, #d946ef, #ec4899);
   color: #fff;
-  box-shadow: 0 4px 20px rgba(14, 165, 233, 0.3);
+  box-shadow: 0 4px 20px rgba(217, 70, 239, 0.3);
 }
 
 .btn.primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 24px rgba(14, 165, 233, 0.4);
+  box-shadow: 0 6px 24px rgba(217, 70, 239, 0.4);
 }
 
 .btn.secondary {
@@ -212,12 +212,12 @@ h1 span {
 
 .btn.tertiary {
   color: var(--accent);
-  border-color: rgba(56, 189, 248, 0.3);
-  background: rgba(56, 189, 248, 0.08);
+  border-color: rgba(217, 70, 239, 0.3);
+  background: rgba(217, 70, 239, 0.08);
 }
 
 .btn.tertiary:hover {
-  background: rgba(56, 189, 248, 0.15);
+  background: rgba(217, 70, 239, 0.15);
 }
 
 .hero-metrics {
@@ -598,7 +598,7 @@ h2 {
 .contact-form textarea:focus {
   outline: none;
   border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.15);
+  box-shadow: 0 0 0 3px rgba(217, 70, 239, 0.15);
 }
 
 /* Footer */
@@ -634,20 +634,20 @@ h2 {
   width: 58px;
   height: 58px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #0284c7, #0ea5e9);
+  background: linear-gradient(135deg, #d946ef, #ec4899);
   color: #fff;
   border: none;
   cursor: pointer;
   z-index: 1000;
   display: grid;
   place-items: center;
-  box-shadow: 0 8px 30px rgba(14, 165, 233, 0.4);
+  box-shadow: 0 8px 30px rgba(217, 70, 239, 0.4);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .copilot-bubble:hover {
   transform: scale(1.06) rotate(6deg);
-  box-shadow: 0 10px 35px rgba(14, 165, 233, 0.5);
+  box-shadow: 0 10px 35px rgba(217, 70, 239, 0.5);
 }
 
 .copilot-bubble.active {
@@ -665,7 +665,7 @@ h2 {
   right: 0;
   bottom: 0;
   border-radius: 50%;
-  border: 1px solid rgba(14, 165, 233, 0.5);
+  border: 1px solid rgba(217, 70, 239, 0.5);
   animation: pulse-glow-anim 2s infinite;
   pointer-events: none;
 }
@@ -717,8 +717,8 @@ h2 {
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  background: rgba(56, 189, 248, 0.15);
-  border: 1px solid rgba(56, 189, 248, 0.3);
+  background: rgba(217, 70, 239, 0.15);
+  border: 1px solid rgba(217, 70, 239, 0.3);
   display: grid;
   place-items: center;
   font-weight: 800;
@@ -774,7 +774,7 @@ h2 {
 }
 
 .copilot-message.user {
-  background: #0ea5e9;
+  background: #d946ef;
   color: #fff;
   align-self: flex-end;
   border-bottom-right-radius: 4px;
@@ -851,8 +851,8 @@ h2 {
 }
 
 .suggestion-chip:hover {
-  background: rgba(56, 189, 248, 0.08);
-  border-color: rgba(56, 189, 248, 0.3);
+  background: rgba(217, 70, 239, 0.08);
+  border-color: rgba(217, 70, 239, 0.3);
 }
 
 .copilot-input-area {
@@ -900,7 +900,7 @@ h2 {
 
 .copilot-input-area button:not(:disabled):hover {
   transform: scale(1.04);
-  background: #60a5fa;
+  background: #ec4899;
 }
 
 /* Copilot Settings Panel Inside Widget */

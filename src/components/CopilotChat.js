@@ -17,7 +17,7 @@ export default function CopilotChat() {
   const [showSettings, setShowSettings] = useState(false);
   
   // Settings state (hydrated from localStorage on mount)
-  const [provider, setProvider] = useState('gemini');
+  const [provider, setProvider] = useState('grok');
   const [apiKey, setApiKey] = useState('');
 
   const chatEndRef = useRef(null);
@@ -228,7 +228,7 @@ export default function CopilotChat() {
               onChange={(e) => setProvider(e.target.value)}
               className="settings-input"
             >
-              <option value="gemini">Google Gemini API (Recommended)</option>
+              <option value="grok">Grok (xAI) API (Recommended)</option>
               <option value="openai">OpenAI API</option>
             </select>
 

@@ -1,7 +1,6 @@
 import { NextResponse } from 'next/server';
 import fs from 'fs';
 import path from 'path';
-import { GoogleGenerativeAI } from '@google/generative-ai';
 import OpenAI from 'openai';
 
 // Read the resume content to ground the AI model
@@ -18,14 +17,14 @@ const getResumeContext = () => {
 export async function POST(request) {
   try {
     const body = await request.json();
-    const { question, customApiKey, provider = 'gemini' } = body;
+    const { question, customApiKey, provider = 'grok' } = body;
 
     if (!question || question.trim() === '') {
       return NextResponse.json({ error: 'Question is required' }, { status: 400 });
     }
 
     // Determine the API Key: check environment variables first, then custom client-supplied key
-    const geminiKey = process.env.GEMINI_API_KEY || (provider === 'gemini' ? customApiKey : null);
+    const grokKey = process.env.GROK_API_KEY || process.env.XAI_API_KEY || (provider === 'grok' ? customApiKey : null);
     const openaiKey = process.env.OPENAI_API_KEY || (provider === 'openai' ? customApiKey : null);
 
     const context = getResumeContext();
@@ -46,29 +45,31 @@ ${context}
 
     let answerText = '';
 
-    if (provider === 'gemini') {
-      if (!geminiKey) {
+    if (provider === 'grok') {
+      if (!grokKey) {
         return NextResponse.json(
-          { error: 'Gemini API Key is missing. Please configure GEMINI_API_KEY in .env.local or enter it in the chat settings.' },
+          { error: 'Grok API Key is missing. Please configure GROK_API_KEY in .env.local or enter it in the chat settings.' },
           { status: 400 }
         );
       }
 
-      const ai = new GoogleGenerativeAI(geminiKey);
-      // Using gemini-1.5-flash which is standard and has very low latency
-      const model = ai.getGenerativeModel({ model: 'gemini-1.5-flash' });
-      
-      const prompt = `${systemPrompt}\n\nUser Question: ${question}\n\nAssistant Response:`;
-      
-      const result = await model.generateContent({
-        contents: [{ role: 'user', parts: [{ text: prompt }] }],
-        generationConfig: {
-          temperature: 0.1, // low temperature for strict grounding
-          maxOutputTokens: 500,
-        }
+      // xAI API is fully compatible with OpenAI SDK. We configure base URL and model.
+      const client = new OpenAI({
+        apiKey: grokKey,
+        baseURL: 'https://api.x.ai/v1',
       });
       
-      answerText = result.response.text();
+      const response = await client.chat.completions.create({
+        model: 'grok-beta',
+        messages: [
+          { role: 'system', content: systemPrompt },
+          { role: 'user', content: question }
+        ],
+        temperature: 0.1,
+        max_tokens: 500,
+      });
+      
+      answerText = response.choices[0].message.content;
     } else if (provider === 'openai') {
       if (!openaiKey) {
         return NextResponse.json(
