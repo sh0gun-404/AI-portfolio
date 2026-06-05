@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import fs from 'fs';
 import path from 'path';
-import OpenAI from 'openai';
+import { GoogleGenerativeAI } from '@google/generative-ai';
 
 // Read the resume content to ground the AI model
 const getResumeContext = () => {
@@ -17,15 +17,13 @@ const getResumeContext = () => {
 export async function POST(request) {
   try {
     const body = await request.json();
-    const { question, customApiKey, provider = 'grok' } = body;
+    const { question } = body;
 
     if (!question || question.trim() === '') {
       return NextResponse.json({ error: 'Question is required' }, { status: 400 });
     }
 
-    // Determine the API Key: check environment variables first, then custom client-supplied key
-    const grokKey = process.env.GROK_API_KEY || process.env.XAI_API_KEY || (provider === 'grok' ? customApiKey : null);
-    const openaiKey = process.env.OPENAI_API_KEY || (provider === 'openai' ? customApiKey : null);
+    const geminiKey = process.env.GEMINI_API_KEY;
 
     const context = getResumeContext();
 
@@ -56,57 +54,21 @@ SHUBH'S PROFILE DATA:
 ${context}
 `;
 
-    let answerText = '';
-
-    if (provider === 'grok') {
-      if (!grokKey) {
-        return NextResponse.json(
-          { error: 'Grok API Key is missing. Please configure GROK_API_KEY in .env.local or enter it in the chat settings.' },
-          { status: 400 }
-        );
-      }
-
-      // xAI API is fully compatible with OpenAI SDK. We configure base URL and model.
-      const client = new OpenAI({
-        apiKey: grokKey,
-        baseURL: 'https://api.x.ai/v1',
-      });
-      
-      const response = await client.chat.completions.create({
-        model: 'grok-latest',
-        messages: [
-          { role: 'system', content: systemPrompt },
-          { role: 'user', content: question }
-        ],
-        temperature: 0.1,
-        max_tokens: 500,
-      });
-      
-      answerText = response.choices[0].message.content;
-    } else if (provider === 'openai') {
-      if (!openaiKey) {
-        return NextResponse.json(
-          { error: 'OpenAI API Key is missing. Please configure OPENAI_API_KEY in .env.local or enter it in the chat settings.' },
-          { status: 400 }
-        );
-      }
-
-      const openai = new OpenAI({ apiKey: openaiKey });
-      
-      const response = await openai.chat.completions.create({
-        model: 'gpt-4o-mini',
-        messages: [
-          { role: 'system', content: systemPrompt },
-          { role: 'user', content: question }
-        ],
-        temperature: 0.1,
-        max_tokens: 500,
-      });
-
-      answerText = response.choices[0].message.content;
-    } else {
-      return NextResponse.json({ error: 'Unsupported provider' }, { status: 400 });
+    if (!geminiKey) {
+      return NextResponse.json(
+        { error: 'Gemini API Key is missing. Please configure GEMINI_API_KEY in .env.local.' },
+        { status: 400 }
+      );
     }
+
+    const genAI = new GoogleGenerativeAI(geminiKey);
+    const model = genAI.getGenerativeModel({
+      model: 'gemini-1.5-flash',
+      systemInstruction: systemPrompt,
+    });
+    
+    const result = await model.generateContent(question);
+    const answerText = result.response.text();
 
     return NextResponse.json({ answer: answerText.trim() });
 
